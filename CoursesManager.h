@@ -25,7 +25,7 @@ public:
     void removeCourse(int course_id);
     void addWatch(int course_id, int class_id, int time_to_add);
     int getTimeViewed(int course_id,int class_id);
-    void getMostWatched(int wanted, int* courses,int* classes);
+    void getMostWatched(int wanted, int* course,int* classes);
     bool courseExsit(int course_id);
     bool classExisitInCourse(int course_id,int class_id);
     int getTotalClasses();
@@ -135,6 +135,14 @@ time complax o(N)
  int CoursesManager::getTotalClasses()
  {
      return total_num_of_classes;
+ }
+
+ void CoursesManager::getMostWatched(int wanted, int* course,int* classes)
+ {
+     ClassTuple* t= viewed_classes_tree->getiVertex(wanted);
+     *course=t->getCourseID();
+     *classes=t->getClassID();
+     
  }
 
 #endif

@@ -21,7 +21,7 @@ private:
 public:
      CoursesManager();
     ~CoursesManager();
-    void addCourse(int course_id, int num_of_classes);
+    void addCourse(int course_id);
     void removeCourse(int course_id);
     void addWatch(int course_id, int class_id, int time_to_add);
     int getTimeViewed(int course_id,int class_id);
@@ -30,6 +30,7 @@ public:
     bool classExisitInCourse(int course_id,int class_id);
     int getTotalClasses();
     int numOfClasses(int course_id);
+    void addClass(int course_id);
 
 };
 
@@ -51,19 +52,18 @@ CoursesManager::~CoursesManager()
 
 /*add a new course to the struct
 don't give a course that is in the tree */
-void CoursesManager::addCourse(int course_id,int num_of_classes)
+void CoursesManager::addCourse(int course_id)
 {
     
     Array<int>* class_array=new Array<int> (course_id);
     courses_array->insertItem(course_id,class_array);
     num_of_courses++;
-    total_num_of_classes+=num_of_classes;
     
 }
 
 int CoursesManager::numOfClasses(int course_id)
 {
-    Array<int>* class_array=courses_array.get(course_id);
+    Array<int>* class_array=courses_array->get(course_id);
     int num_of_classes=class_array->getNumOfClasses();
     return num_of_classes;
 }
@@ -74,7 +74,7 @@ void CoursesManager::removeCourse(int course_id)
 {
     Array<int>* need_to_remove_course=courses_array.get(course_id);//o(1)
     int num_of_classes=need_to_remove_course->getNumOfClasses();//o(1)
-    int num_of_watched_classes=need_to_remove_course->getNumOfUndifined();//o(1)
+    int num_of_watched_classes=num_of_classes-(need_to_remove_course->getNumOfUndifined());//o(1)
     for(int i=0;i<num_of_classes;i++)//o(num of classes in removed course)
     {
         if(need_to_remove_course->at(i)!=0)//this class was watched
@@ -88,11 +88,23 @@ void CoursesManager::removeCourse(int course_id)
     total_num_of_classes-=num_of_classes;
     num_of_courses--;
 }
+
+
+
+void CoursesManager::addClass(int course_id)
+{
+    courses_array->get(course_id)->addClass();
+    total_num_of_classes++;
+}
+
+
+
+
 /*this will add the watch time to the class of the course you ask for
 give it course that exists and classs that exists*/
 void CoursesManager::addWatch(int course_id, int class_id, int time_to_add)
 {
-    Array<int>* course=courses_array.get(course_id);//o(1)
+    Array<int>* course=courses_array->get(course_id);//o(1)
     int class_watched_time=course->at(class_id);//O(1)
     if(class_watched_time!=0)//this classs was watched before
     {

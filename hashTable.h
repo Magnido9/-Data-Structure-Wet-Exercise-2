@@ -3,7 +3,7 @@
 
 
 #include "list.h"
-#include "Array.h" 
+#include "array.h" 
 using namespace std; 
   
 class hashTable // a class for a Linked List implemantation of an hash table

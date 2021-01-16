@@ -129,7 +129,7 @@ time complexity O(N)
 */
  bool CoursesManager::courseExsit(int course_id)
  {
-     return courses_array->getItem(course_id)!=null;
+     return (courses_array->getItem(course_id)!=nullptr);
  }
  /*returns if a class of the course is in the struct alraedy
  time complexity O(N)*/

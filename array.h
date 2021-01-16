@@ -61,7 +61,11 @@ X& Array<X>::operator [](int i)
     }
     if(i>=current_size)
     {
-        X* temp=new X[current_size*NEW_SIZE]{0};
+        X* temp=new X[current_size*NEW_SIZE];
+        for(int j=current_size;j<current_size*NEW_SIZE;j++
+            {
+                temp[j]=0;
+            }
         
         
         for(int j=0;j<current_size;j++)

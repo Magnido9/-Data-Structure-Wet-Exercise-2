@@ -4,53 +4,69 @@ class list
 {
     private:
     int size;
-    Array<X>* array;
+    Array<int>* array;
     list<X>* next;
     list<X>* prev;
     
     
     public:
-    list(list<X>* pre,Array<X>* arr){
+    
+    list(){
+        size=-1;
+        next=nullptr;
+        prev=nullptr;
+        array=nullptr;
+    }
+    list(list<X>* pre,Array<int>* arr){
         array=arr;
         prev=pre;
         size=0;
     }
     ~list(){
-        ~this->array;
-        delete array
+        delete array;
         if(next!=nullptr)
-            ~this->next;
             delete next;
         if(prev!=nullptr)
-            ~this->prev;
             delete prev;
     }
-    void insert(Array<X>* arr){
-        if(size==0){
+    void insert(Array<int>* arr){
+        if(size==-1){
+            array=arr;
+            size=0;
+        }else if(size==0){
             next=new list(this,arr);
             size+=1;
         }
         else{
-            next->push_back(arr);
+            next->insert(arr);
             size+=1;
         }
     }
     list<X>* getNext(){
         return next;
     }
-    int remove(int num){
-        if(array->getCourseNum()==num){//if this is the item-remove the item from the list 
-            prev->next=this->next;
-            next->prev=this->prev;
-            delte this;
+    list<X>* remove(int num){
+        if(array->getCourseNum()==num){//if this is the item-remove the item from the list
+            if(prev!=nullptr){
+                prev->next=this->next;
+                next->prev=this->prev;
+                delete this;
+            }else{
+                delete array;
+                return next;
+            }
+            
         }else{
             if(next==nullptr)
-                return 1;//return 1 if the item does not  exist in the list
-            next->remove(l);
+                return nullptr;//return 1 if the item does not  exist in the list
+            next->remove(num);
         }
-        return 0;
+        return this;
     }
-    Array<X>* getItem(int num){
+    Array<int>* getItem(int num){
+        if(size==-1){
+            return nullptr;
+        }
          if(array->getCourseNum()==num){//if this is the item-remove the item from the list 
             return array;
          }else{
@@ -58,7 +74,15 @@ class list
                 return nullptr;//return null if the item is not in the list
             next->getItem(num);
          }
+         return nullptr;//this will never happen, here just for the warning
+    }    
+    Array<int>* getArray(){
+        return array;
     }
+    int getSize(){
+        return size;
+    }
+
 
 };
     

@@ -63,7 +63,7 @@ void CoursesManager::addCourse(int course_id)
 
 int CoursesManager::numOfClasses(int course_id)
 {
-    Array<int>* class_array=courses_array->get(course_id);
+    Array<int>* class_array=courses_array->getItem(course_id);
     int num_of_classes=class_array->getNumOfClasses();
     return num_of_classes;
 }
@@ -72,7 +72,7 @@ int CoursesManager::numOfClasses(int course_id)
 make sure it exists*/
 void CoursesManager::removeCourse(int course_id)
 {
-    Array<int>* need_to_remove_course=courses_array.getItem(course_id);//O(1) on average
+    Array<int>* need_to_remove_course=courses_array->getItem(course_id);//O(1) on average
     int num_of_classes=need_to_remove_course->getNumOfClasses();//O(1)
     int num_of_watched_classes=num_of_classes-(need_to_remove_course->getNumOfUndifined());//O(1)
     for(int i=0;i<num_of_classes;i++)//O(num of classes in removed course)
@@ -119,7 +119,9 @@ void CoursesManager::addWatch(int course_id, int class_id, int time_to_add)
 /*make sure to give this function a valid course id and class id*/   
 int CoursesManager::getTimeViewed(int course_id,int class_id)
 {
-    return (courses_array->getItem(course_id)->at(course_id));//O(1) on average
+    int i=courses_array->getItem(course_id)->at(class_id);//O(1) on average
+    return i;
+        
 }
 
 

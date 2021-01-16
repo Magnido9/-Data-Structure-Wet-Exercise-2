@@ -1,4 +1,4 @@
-#include"library2.h"
+#include "library2.h"
 #include"CoursesManager.h"
 #include <stdio.h>
 #include <iostream>
@@ -155,7 +155,7 @@ StatusType GetIthWatchedClass(void* DS, int i, int* courseID, int* classID)
     {
         try
         {
-            ((CoursesManager*)DS)->getMostWatched(i,courses,classes);
+            ((CoursesManager*)DS)->getMostWatched(i,courseID,classID);
         }
         catch(const std::bad_alloc& e)
         {
@@ -176,5 +176,34 @@ StatusType GetIthWatchedClass(void* DS, int i, int* courseID, int* classID)
 void Quit(void** DS){
     delete (CoursesManager*)*DS;
     *DS=nullptr;
+
+}
+
+int main(){
+   CoursesManager* manager=(CoursesManager*)Init();
+   AddCourse(manager,1234);
+   int *id=new int();
+   AddClass(manager,1234,id);
+   AddCourse(manager,1254);
+   StatusType ab=RemoveCourse(manager,1254);
+   WatchClass(manager,1234,0,12);
+   AddCourse(manager,1254);
+   AddClass(manager,1254,id);
+   AddClass(manager,1234,id);
+   AddClass(manager,1234,id);
+   AddClass(manager,1234,id);
+   WatchClass(manager,1254,2,16);
+   WatchClass(manager,1234,0,11);
+   int *viewed=new int();
+   TimeViewed(manager,1234,0,viewed);
+   int view=*viewed;
+   int *courseID=new int();
+   int *classID=new int();
+   GetIthWatchedClass(manager,2,courseID,classID);
+   int a=*classID;
+   int b=*courseID;
+   Quit((void **)&manager);
+
+
 
 }

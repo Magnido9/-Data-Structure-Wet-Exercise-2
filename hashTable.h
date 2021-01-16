@@ -17,13 +17,14 @@ public:
     void insertItem(int course_number,Array<int>* array); 
   
     // delete a course from the hash table 
-    int deleteItem(int course_number); 
+    void deleteItem(int course_number); 
   
     // basic modulo hash function to map values to key 
     int hashFunction(int x) { 
         return (x % size); 
     }
     Array<int>* getItem(int course_number); 
+    Array<int>* getArray(); 
 
 }; 
   
@@ -36,34 +37,32 @@ hashTable::hashTable(int size)
 void hashTable::insertItem(int course_number,Array<int>* array) 
 { 
     int index = hashFunction(course_number); 
-    if(table[index]==nullptr){//if the list is empty, create a new list
-        table[index]=new list(nullptr,array);
-    }else{//otherwise, add the item to the list
-        table[index].insert(array);  
-    }
+    table[index].insert(array);  
 } 
   
-int hashTable::deleteItem(int course_number) 
+void hashTable::deleteItem(int course_number) 
 { 
   // get the hash index of course number 
   int index = hashFunction(course_number); 
   int i=0;
   // find the course in the hash table
-  list <Array<int>*> *t=table[index];// a temporary pointer to travel the list 
-  for (i = 0; i< table[index].size(); i++) { 
-    if (t.getArray().getCourseNum() == course_number) 
+  list <Array<int>*> *t=&table[index];// a temporary pointer to travel the list 
+  int tt=table[index].getSize();
+  for (i = 0; i<= table[index].getSize(); i++) { 
+    if (t->getArray()->getCourseNum() == course_number) 
       break; 
-    t=t.getNext();
+    t=t->getNext();
   } 
   
   // if we found the course- remove it
-  if (i != table[index].size()-1) 
-    return table[index].remove(l->array->getCourseNum());//return 0 if the course was foudn and 1 otherwise
+  if (i != table[index].getSize()) 
+    table[index]=*table[index].remove(t->getArray()->getCourseNum());//return 0 if the course was foudn and 1 otherwise
+
 } 
-Array<int>* getItem(int course_number)
+Array<int>* hashTable::getItem(int course_number)
 { 
   // get the hash index of course number 
   int index = hashFunction(course_number);
-  return table[index].getArr(course_number);//get the item from the list
+  return table[index].getItem(course_number);//get the item from the list
 } 
 #endif

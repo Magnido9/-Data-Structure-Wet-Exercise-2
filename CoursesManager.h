@@ -72,14 +72,14 @@ int CoursesManager::numOfClasses(int course_id)
 make sure it exists*/
 void CoursesManager::removeCourse(int course_id)
 {
-    Array<int>* need_to_remove_course=courses_array.get(course_id);//o(1)
-    int num_of_classes=need_to_remove_course->getNumOfClasses();//o(1)
-    int num_of_watched_classes=num_of_classes-(need_to_remove_course->getNumOfUndifined());//o(1)
-    for(int i=0;i<num_of_classes;i++)//o(num of classes in removed course)
+    Array<int>* need_to_remove_course=courses_array.getItem(course_id);//O(1) on average
+    int num_of_classes=need_to_remove_course->getNumOfClasses();//O(1)
+    int num_of_watched_classes=num_of_classes-(need_to_remove_course->getNumOfUndifined());//O(1)
+    for(int i=0;i<num_of_classes;i++)//O(num of classes in removed course)
     {
         if(need_to_remove_course->at(i)!=0)//this class was watched
         {
-            viewed_classes_tree->Delete(ClassTuple(course_id,i,need_to_remove_course->at(i)));//o(log(total classes in struct))
+            viewed_classes_tree->Delete(ClassTuple(course_id,i,need_to_remove_course->at(i)));//O(log(total classes in struct))
         }
         
     }
@@ -93,7 +93,7 @@ void CoursesManager::removeCourse(int course_id)
 
 void CoursesManager::addClass(int course_id)
 {
-    courses_array->get(course_id)->addClass();
+    courses_array->getItem(course_id)->addClass();//average O(1)
     total_num_of_classes++;
 }
 
@@ -104,11 +104,11 @@ void CoursesManager::addClass(int course_id)
 give it course that exists and classs that exists*/
 void CoursesManager::addWatch(int course_id, int class_id, int time_to_add)
 {
-    Array<int>* course=courses_array->get(course_id);//o(1)
+    Array<int>* course=courses_array->getItem(course_id);//O(1) on average
     int class_watched_time=course->at(class_id);//O(1)
     if(class_watched_time!=0)//this classs was watched before
     {
-        viewed_classes_tree->Delete(ClassTuple(course_id,class_id,class_watched_time));//o(log(total classes in struct))
+        viewed_classes_tree->Delete(ClassTuple(course_id,class_id,class_watched_time));//O(log(total classes in struct))
     }
     
     (*course)[class_id]+=time_to_add;
@@ -119,25 +119,25 @@ void CoursesManager::addWatch(int course_id, int class_id, int time_to_add)
 /*make sure to give this function a valid course id and class id*/   
 int CoursesManager::getTimeViewed(int course_id,int class_id)
 {
-    return (courses_array->get(course_id)->at(course_id));
+    return (courses_array->getItem(course_id)->at(course_id));//O(1) on average
 }
 
 
-/*r
+/*
 returuns if a courst is in the strcut alraedy
-time complax o(N) 
+time complexity O(N) 
 */
  bool CoursesManager::courseExsit(int course_id)
  {
-     return courses_array->exist(course_id);
+     return courses_array->getItem(course_id)!=null;
  }
  /*returns if a class of the course is in the struct alraedy
- time complax O(N)*/
+ time complexity O(N)*/
  bool CoursesManager::classExisitInCourse(int course_id,int class_id)
  {
      if(this->courseExsit(course_id))
      {
-         if(courses_array->get(course_id)->getNumOfClasses()>class_id)
+         if(courses_array->get(course_id)->getNumOfClasses()>class_id)//
          {
              return true;
          }

@@ -78,7 +78,7 @@ class AvlTree
 };
 /*
 this function will tell you if the given key is alraedy in the tree
-time compax :log(N)
+time complexity :log(N)
 */
 template <class X, class Y>
 bool AvlTree<X,Y>::exist(const X& key)const
@@ -89,7 +89,7 @@ bool AvlTree<X,Y>::exist(const X& key)const
 /*
 this function will give the data of the given key
 BE CAREFUL don't give it a key which not in the tree
-time complax:log(N)
+time complexity :log(N)
 */
 template <class X,class Y>
 Y AvlTree<X,Y>::get(const X& key)const
@@ -106,7 +106,7 @@ Y AvlTree<X,Y>::get(const X& key)const
 
 /*
 give this function a key and it will take it out of the tree without hurting the order of the avltree
-time complaxity: log(N) whan n is the amount of items in the tree
+time complexity: log(N) whan n is the amount of items in the tree
 if key not found in the tree nothing will happen
 */
 template <class X, class Y>
@@ -132,7 +132,7 @@ void AvlTree<X,Y>::Delete(const X& key)
 /*
 this function gets a key and data to add THEM into the tree.
 if the key is already in the tree this will replace it with the new data by removing the old one and inserting the new one
-time comlex:log(N)
+time comlexity:log(N)
 */
 template<class X,class Y>
 void AvlTree<X,Y>::insert(const X& key,const Y& data)
@@ -239,7 +239,7 @@ AvlTree<X,Y>* AvlTree<X,Y>::getSmallest()const
 
 /*
 find the vertex with the same key that was given and return its address
-if not fount in the tree returns nullptr
+if not found in the tree returns nullptr
 */
 template <class X, class Y>
 AvlTree<X,Y>* AvlTree<X,Y>::findV(const X& key)

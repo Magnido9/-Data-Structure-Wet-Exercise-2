@@ -137,7 +137,7 @@ time complexity O(N)
  {
      if(this->courseExsit(course_id))
      {
-         if(courses_array->get(course_id)->getNumOfClasses()>class_id)//
+         if(courses_array->getItem(course_id)->getNumOfClasses()>class_id)//O(1) on average
          {
              return true;
          }
@@ -151,7 +151,7 @@ time complexity O(N)
 
  void CoursesManager::getMostWatched(int wanted, int* course,int* classes)
  {
-     ClassTuple* t= viewed_classes_tree->getiVertex(wanted);
+     ClassTuple* t= viewed_classes_tree->getiVertex(wanted);//AVL tree lookup- O(log(number of classes in the tree))
      *course=t->getCourseID();
      *classes=t->getClassID();
      

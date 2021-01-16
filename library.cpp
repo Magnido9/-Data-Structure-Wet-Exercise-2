@@ -141,8 +141,7 @@ StatusType TimeViewed(void *DS, int courseID, int classID, int *timeViewed){
     return SUCCESS;
 
 }
-
-StatusType GetMostViewedClass(void *DS, int i, int *courses, int *classes)
+StatusType GetIthWatchedClass(void* DS, int i, int* courseID, int* classID)
 {
     if(DS==nullptr||i<=0)
     {
@@ -169,7 +168,10 @@ StatusType GetMostViewedClass(void *DS, int i, int *courses, int *classes)
         
     }
     return SUCCESS;
+
+
 }
+
 
 void Quit(void** DS){
     delete (CoursesManager*)*DS;

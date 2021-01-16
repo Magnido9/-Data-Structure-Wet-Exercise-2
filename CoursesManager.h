@@ -3,7 +3,6 @@
 #include"rank_tree.h"
 #include "classTuple.h"
 #include"hashTable.h"
-
 #include "assert.h"
 #define INITIAL_SIZE 100
 
@@ -25,12 +24,13 @@ public:
     void removeCourse(int course_id);
     void addWatch(int course_id, int class_id, int time_to_add);
     int getTimeViewed(int course_id,int class_id);
-    void getMostWatched(int wanted, int* course,int* classes);
+    void getMostWatched(int i, int* course,int* classes);
     bool courseExsit(int course_id);
     bool classExisitInCourse(int course_id,int class_id);
     int getTotalClasses();
     int numOfClasses(int course_id);
     void addClass(int course_id);
+    int getWatchedClasses();
 
 };
 
@@ -63,7 +63,7 @@ void CoursesManager::addCourse(int course_id)
 
 int CoursesManager::numOfClasses(int course_id)
 {
-    Array<int>* class_array=courses_array->get(course_id);
+    Array<int>* class_array=courses_array->getItem(course_id);
     int num_of_classes=class_array->getNumOfClasses();
     return num_of_classes;
 }
@@ -72,7 +72,7 @@ int CoursesManager::numOfClasses(int course_id)
 make sure it exists*/
 void CoursesManager::removeCourse(int course_id)
 {
-    Array<int>* need_to_remove_course=courses_array.getItem(course_id);//O(1) on average
+    Array<int>* need_to_remove_course=courses_array->getItem(course_id);//O(1) on average
     int num_of_classes=need_to_remove_course->getNumOfClasses();//O(1)
     int num_of_watched_classes=num_of_classes-(need_to_remove_course->getNumOfUndifined());//O(1)
     for(int i=0;i<num_of_classes;i++)//O(num of classes in removed course)
@@ -110,7 +110,8 @@ void CoursesManager::addWatch(int course_id, int class_id, int time_to_add)
     {
         viewed_classes_tree->Delete(ClassTuple(course_id,class_id,class_watched_time));//O(log(total classes in struct))
     }
-    
+    if(class_watched_time==0)
+        num_watched_classes+=1;
     (*course)[class_id]+=time_to_add;
     ClassTuple* new_class_data=new ClassTuple(course_id,class_id,course->at(class_id));
     viewed_classes_tree->insert(*new_class_data,new_class_data);
@@ -119,7 +120,7 @@ void CoursesManager::addWatch(int course_id, int class_id, int time_to_add)
 /*make sure to give this function a valid course id and class id*/   
 int CoursesManager::getTimeViewed(int course_id,int class_id)
 {
-    return (courses_array->getItem(course_id)->at(course_id));//O(1) on average
+    return (courses_array->getItem(course_id)->at(class_id));//O(1) on average
 }
 
 
@@ -129,7 +130,7 @@ time complexity O(N)
 */
  bool CoursesManager::courseExsit(int course_id)
  {
-     return (courses_array->getItem(course_id)!=nullptr);
+     return courses_array->getItem(course_id)!=nullptr;
  }
  /*returns if a class of the course is in the struct alraedy
  time complexity O(N)*/
@@ -155,6 +156,9 @@ time complexity O(N)
      *course=t->getCourseID();
      *classes=t->getClassID();
      
+ }
+ int CoursesManager::getWatchedClasses(){
+     return num_watched_classes;
  }
 
 #endif

@@ -182,35 +182,3 @@ void Quit(void** DS){
 
 }
 
-int main(){
-   CoursesManager* manager=(CoursesManager*)Init();
-   AddCourse(manager,1234);
-   int *id=new int();
-   AddClass(manager,1234,id);
-   AddCourse(manager,1254);
-   StatusType ab=RemoveCourse(manager,1254);
-   WatchClass(manager,1234,0,12);
-   AddCourse(manager,1254);
-   AddClass(manager,1254,id);
-   AddClass(manager,1254,id);
-   AddClass(manager,1254,id);
-   AddClass(manager,1254,id);
-   AddClass(manager,1254,id);
-   AddClass(manager,1234,id);
-   AddClass(manager,1234,id);
-   AddClass(manager,1234,id);
-   WatchClass(manager,1254,2,16);
-   WatchClass(manager,1234,0,11);
-   int *viewed=new int();
-   TimeViewed(manager,1234,0,viewed);
-   int view=*viewed;
-   int *courseID=new int();
-   int *classID=new int();
-   GetIthWatchedClass(manager,4,courseID,classID);
-   int a=*classID;
-   int b=*courseID;
-   Quit((void **)&manager);
-
-
-
-}

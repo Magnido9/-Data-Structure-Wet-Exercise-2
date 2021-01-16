@@ -21,7 +21,7 @@ class Info
     public:
     ~Info()
         {   
-            //delete data;
+            delete data;
             
         }
     Info(Z key , T data,bool key_is_pointer):key(key),data(data),height(0),vertexes(1){}

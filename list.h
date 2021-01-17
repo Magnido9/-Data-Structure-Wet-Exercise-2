@@ -24,12 +24,13 @@ class list
         next=nullptr;
     }
     ~list(){
-        if(size==-1)
-            return;
+        
         if(array!=nullptr)
             delete array;
+        array=nullptr;
         if(next!=nullptr)
             delete next;
+        next=nullptr;
     }
     void insert(Array<int>* arr){
         if(size==-1){
@@ -65,19 +66,23 @@ class list
         return next;
     }
     list<X>* remove(int num){
+        
         if(next!=nullptr){ 
             if (this->getArray()->getCourseNum() == num){ 
                 
                 this->next->prev=nullptr;
-                delete array;
-                return next;
+                
+                list<X>* temp=next;
+                next=nullptr;
+                delete this;
+                return temp;
             }
             list<X>* t=next;
             while(t!=nullptr) { 
                 if (t->getArray()->getCourseNum() == num){ 
                     t->prev->next=t->next;
                     t->next->prev=t->prev;
-                    delete t->array;
+                    delete t;
                     break;
                 }
                 t->size-=1;
@@ -127,7 +132,23 @@ class list
             return next->getItem(num);
          }
          return nullptr;//this will never happen, here just for the warning
-    }    
+    }  
+    list<Array<int>*>* getItemList(int num){
+        if(size==-1){
+            return nullptr;
+        }
+         if(array==nullptr){
+             return nullptr;
+         }
+         if(array->getCourseNum()==num){//if this is the item-remove the item from the list 
+            return this;
+         }else{
+            if(next==nullptr)
+                return nullptr;//return null if the item is not in the list
+            return next->getItemList(num);
+         }
+         return nullptr;//this will never happen, here just for the warning
+    }      
     Array<int>* getArray(){
         return array;
     }
@@ -137,4 +158,3 @@ class list
 
 
 };
-    

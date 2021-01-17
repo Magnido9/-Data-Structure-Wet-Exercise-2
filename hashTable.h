@@ -86,7 +86,6 @@ void hashTable::deleteItem(int course_number)
   for (i = 0; i<= table[index].getSize(); i++) { 
     if (t->getArray()->getCourseNum() == course_number) 
       table[index]=*table[index].remove(t->getArray()->getCourseNum());
-      delete t;
       items--;
       break;
     t=t->getNext();

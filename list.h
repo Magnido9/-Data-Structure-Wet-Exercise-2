@@ -65,7 +65,32 @@ class list
         return next;
     }
     list<X>* remove(int num){
-        list<X>* temp;
+        if(next!=nullptr){ 
+            if (this->getArray()->getCourseNum() == num){ 
+                
+                this->next->prev=nullptr;
+                delete array;
+                return next;
+            }
+            list<X>* t=next;
+            while(t!=nullptr) { 
+                if (t->getArray()->getCourseNum() == num){ 
+                    t->prev->next=t->next;
+                    t->next->prev=t->prev;
+                    delete t->array;
+                    break;
+                }
+                t->size-=1;
+                t=t->getNext();
+            }
+            return this;
+        }
+        else{
+            delete array;
+            this->size=-1;
+            array=nullptr;
+            return this;
+        } /*
         if(array->getCourseNum()==num){//if this is the item-remove the item from the list
             if(prev!=nullptr){
                 delete array;
@@ -85,7 +110,7 @@ class list
                 return nullptr;
             next->remove(num);
         }
-        return this;
+        return this;*/
     }
     Array<int>* getItem(int num){
         if(size==-1){

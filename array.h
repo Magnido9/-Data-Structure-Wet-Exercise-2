@@ -24,9 +24,7 @@ class Array
     }
     ~Array()
     {
-        if(arr!=nullptr)
-            delete[] arr;
-        
+        delete[] arr;
     }
     X at(int i)const;
     X& operator [](int i);

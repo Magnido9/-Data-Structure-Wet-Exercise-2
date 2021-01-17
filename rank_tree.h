@@ -676,18 +676,18 @@ Y AvlTree<X,Y>::getiVertex(const int i)
 {
     assert(this->info->getVertexes()>=i);
     assert(i>0);
-    int left_w=this->left_tree==nullptr?0:this->left_tree->info->getVertexes();
-    if(left_w==i-1)
+    int right_w=this->right_tree==nullptr?0:this->right_tree->info->getVertexes();
+    if(right_w==i-1)
     {
         return this->info->getData();
     }
-    else if(left_w>i-1)
+    else if(right_w>i-1)
     {
-       return this->left_tree->getiVertex(i);
+       return this->right_tree->getiVertex(i);
     }
     else /*(left_w>i-1)*/
     {
-         return this->right_tree->getiVertex(i-left_w-1);
+         return this->left_tree->getiVertex(i-right_w-1);
     }
         
     

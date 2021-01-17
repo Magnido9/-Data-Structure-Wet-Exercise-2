@@ -21,6 +21,7 @@ class list
         array=arr;
         prev=pre;
         size=0;
+        next=nullptr;
     }
     ~list(){
         delete array;
@@ -42,6 +43,19 @@ class list
             size+=1;
         }
     }
+    void insertList(list<X>* in){
+        if(size==-1){
+            array=in->array;
+            size=0;
+        }else if(size==0){
+            next=in;
+            size+=1;
+        }
+        else{
+            next->insertList(in);
+            size+=1;
+        }
+    }
     list<X>* getNext(){
         return next;
     }
@@ -53,7 +67,12 @@ class list
                 delete this;
             }else{
                 delete array;
-                return next;
+                if(next!=nullptr){
+                    next->prev=nullptr;
+                    return next;
+                }else{
+                    return nullptr;
+                }
             }
             
         }else{
@@ -72,7 +91,7 @@ class list
          }else{
             if(next==nullptr)
                 return nullptr;//return null if the item is not in the list
-            next->getItem(num);
+            return next->getItem(num);
          }
          return nullptr;//this will never happen, here just for the warning
     }    

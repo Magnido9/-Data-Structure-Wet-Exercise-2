@@ -8,6 +8,7 @@ using namespace std;
   
 class hashTable // a class for a Linked List implemantation of an hash table
 { 
+    int items;
     int size;    // amount of lists in the hash table 
     list<Array<int>*> *table; //The hash table- maps course number to its "double array" that contains the lessons and some data about it
 public: 
@@ -25,11 +26,13 @@ public:
     }
     Array<int>* getItem(int course_number); 
     Array<int>* getArray(); 
+    void changeSize(int changeTo);
 
 }; 
   
 hashTable::hashTable(int size) 
 { 
+    items=0;
     this->size =size; 
     table = new list<Array<int>*>[size]; 
 } 
@@ -37,9 +40,38 @@ hashTable::hashTable(int size)
 void hashTable::insertItem(int course_number,Array<int>* array) 
 { 
     int index = hashFunction(course_number); 
-    table[index].insert(array);  
+    table[index].insert(array); 
+    items++; 
+    if(items>size)
+      changeSize(size*2);
 } 
-  
+void hashTable::changeSize(int changeTo){
+        list<Array<int>*> * temp=new list<Array<int>*>[changeTo];
+        list<Array<int>*> * curr=&table[0];
+        size=changeTo;
+        int c=0;
+        
+        for(int j=0;j<items;j++)
+        {
+          if(curr->getSize()==-1){
+            j--;
+            c++;
+            curr=&table[c];
+          }else{
+            int index = hashFunction(curr->getArray()->getCourseNum()); 
+            temp[index].insertList(curr); 
+            if(curr->getNext()==nullptr){
+              c++;
+              curr=&table[c];
+            }else{
+              curr=curr->getNext();
+            }
+          }
+        }
+        table=temp;
+        size=changeTo;
+} 
+
 void hashTable::deleteItem(int course_number) 
 { 
   // get the hash index of course number 
@@ -54,9 +86,10 @@ void hashTable::deleteItem(int course_number)
   } 
   
   // if we found the course- remove it
-  if (i != table[index].getSize()) 
-    table[index]=*table[index].remove(t->getArray()->getCourseNum());//return 0 if the course was foudn and 1 otherwise
-
+  if (i != table[index].getSize()){ 
+    table[index]=*table[index].remove(t->getArray()->getCourseNum());
+    items--;
+  }
 } 
 Array<int>* hashTable::getItem(int course_number)
 { 

@@ -49,8 +49,8 @@ void hashTable::insertItem(int course_number,Array<int>* array)
     int index = hashFunction(course_number); 
     table[index].insert(array); 
     items++; 
-    if(items>size)
-      changeSize(size*2);
+    /*if(items>size)
+      changeSize(size*2);*/
 } 
 void hashTable::changeSize(int changeTo){
         list<Array<int>*> * temp=new list<Array<int>*>[changeTo];
@@ -66,7 +66,7 @@ void hashTable::changeSize(int changeTo){
             curr=&table[c];
           }else{
             int index = hashFunction(curr->getArray()->getCourseNum()); 
-            temp[index].insertList(curr); 
+            temp[index].insert(curr->getArray()); 
             if(curr->getNext()==nullptr){
               c++;
               curr=&table[c];
@@ -75,8 +75,8 @@ void hashTable::changeSize(int changeTo){
             }
           }
         }
+        delete[] table;
         table=temp;
-        size=changeTo;
 } 
 
 void hashTable::deleteItem(int course_number) 

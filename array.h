@@ -24,7 +24,8 @@ class Array
     }
     ~Array()
     {
-        delete[]arr;
+        if(arr!=nullptr)
+            delete[] arr;
         
     }
     X at(int i)const;

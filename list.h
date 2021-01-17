@@ -24,7 +24,10 @@ class list
         next=nullptr;
     }
     ~list(){
-        delete array;
+        if(size==-1)
+            return;
+        if(array!=nullptr)
+            delete array;
         if(next!=nullptr)
             delete next;
     }
@@ -42,11 +45,15 @@ class list
         }
     }
     void insertList(list<X>* in){
+        if(in==nullptr){
+            return;
+        }
         if(size==-1){
             array=in->array;
             size=0;
         }else if(size==0){
             next=in;
+            next->size=0;
             size+=1;
         }
         else{

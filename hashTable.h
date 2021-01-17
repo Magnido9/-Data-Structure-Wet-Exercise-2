@@ -39,9 +39,6 @@ hashTable::hashTable(int size)
     items=0;
     this->size =size; 
     table = new list<Array<int>*>[size];
-    for(int i=0;i<size;i++){
-      table[i] = *new list<Array<int>*>();
-    } 
 } 
   
 void hashTable::insertItem(int course_number,Array<int>* array) 
@@ -49,8 +46,8 @@ void hashTable::insertItem(int course_number,Array<int>* array)
     int index = hashFunction(course_number); 
     table[index].insert(array); 
     items++; 
-    /*if(items>size)
-      changeSize(size*2);*/
+    if(items>size)
+      changeSize(size*2);
 } 
 void hashTable::changeSize(int changeTo){
         list<Array<int>*> * temp=new list<Array<int>*>[changeTo];
@@ -89,6 +86,7 @@ void hashTable::deleteItem(int course_number)
   for (i = 0; i<= table[index].getSize(); i++) { 
     if (t->getArray()->getCourseNum() == course_number) 
       table[index]=*table[index].remove(t->getArray()->getCourseNum());
+      delete t;
       items--;
       break;
     t=t->getNext();

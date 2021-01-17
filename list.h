@@ -65,11 +65,12 @@ class list
         return next;
     }
     list<X>* remove(int num){
+        list<X>* temp;
         if(array->getCourseNum()==num){//if this is the item-remove the item from the list
             if(prev!=nullptr){
-                prev->next=this->next;
-                next->prev=this->prev;
-                delete this;
+                delete array;
+                prev->next=next;
+                next->prev=prev;
             }else{
                 delete array;
                 if(next!=nullptr){
@@ -81,7 +82,7 @@ class list
             }
         }else{
             if(next==nullptr)
-                return nullptr;//return 1 if the item does not  exist in the list
+                return nullptr;
             next->remove(num);
         }
         return this;

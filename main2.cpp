@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "library2.h"
+#include "library.cpp"
 
 #ifdef __cplusplus
 extern "C" {
@@ -88,7 +89,8 @@ int main(int argc, const char**argv) {
     char buffer[MAX_STRING_INPUT_SIZE];
 
     // Reading commands
-    while (fgets(buffer, MAX_STRING_INPUT_SIZE, stdin) != NULL) {
+    FILE* f=fopen("in5.txt","rw");
+    while (fgets(buffer, MAX_STRING_INPUT_SIZE, f) != NULL) {
         fflush(stdout);
         if (parser(buffer) == error)
             break;
@@ -244,6 +246,7 @@ static errorType OnAddClass(void* DS, const char* const command) {
 }
 
 static errorType OnWatchClass(void* DS, const char* const command) {
+    
     int courseID, classID, time;
     ValidateRead(sscanf(command, "%d %d %d", &courseID, &classID, &time), 3, "%s failed.\n", commandStr[WATCHCLASS_CMD]);
     StatusType res = WatchClass(DS, courseID, classID, time);

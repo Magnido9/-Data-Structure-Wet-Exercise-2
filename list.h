@@ -27,8 +27,6 @@ class list
         delete array;
         if(next!=nullptr)
             delete next;
-        if(prev!=nullptr)
-            delete prev;
     }
     void insert(Array<int>* arr){
         if(size==-1){
@@ -71,10 +69,9 @@ class list
                     next->prev=nullptr;
                     return next;
                 }else{
-                    return nullptr;
+                    return new list();
                 }
             }
-            
         }else{
             if(next==nullptr)
                 return nullptr;//return 1 if the item does not  exist in the list
@@ -86,6 +83,9 @@ class list
         if(size==-1){
             return nullptr;
         }
+         if(array==nullptr){
+             return nullptr;
+         }
          if(array->getCourseNum()==num){//if this is the item-remove the item from the list 
             return array;
          }else{

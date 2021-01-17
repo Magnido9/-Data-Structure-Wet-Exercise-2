@@ -39,7 +39,7 @@ CoursesManager::CoursesManager(/* args */)
     num_of_courses=0;
     total_num_of_classes=0;
     num_watched_classes=0;
-    courses_array=new hashTable(1);
+    courses_array=new hashTable(INITIAL_SIZE);
     viewed_classes_tree =new AvlTree<ClassTuple,ClassTuple*>;
 
 }

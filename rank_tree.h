@@ -687,7 +687,12 @@ Y AvlTree<X,Y>::getiVertex(const int i)
     }
     else /*(left_w>i-1)*/
     {
-         return this->left_tree->getiVertex(i-right_w-1);
+        if(this->left_tree!=nullptr){
+            return this->left_tree->getiVertex(i-right_w-1);
+        } else{
+            throw std::exception();
+            return nullptr;
+        }
     }
         
     

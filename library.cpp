@@ -83,6 +83,7 @@ StatusType RemoveCourse(void *DS, int courseID){
 
 StatusType WatchClass(void *DS, int courseID, int classID, int time)
 {
+    
     if(time<=0||DS==nullptr||courseID<=0||classID<0)
     {
         return INVALID_INPUT;
@@ -111,7 +112,6 @@ StatusType WatchClass(void *DS, int courseID, int classID, int time)
         {
             return INVALID_INPUT;
         }
-
 
     }
     return SUCCESS;
@@ -201,6 +201,9 @@ int main(){
    AddClass(manager,1234,id);
    WatchClass(manager,1254,2,16);
    WatchClass(manager,1234,0,11);
+   WatchClass(manager,1254,1,1);
+   WatchClass(manager,1234,1,101);
+   WatchClass(manager,12504,12,11);
    int *viewed=new int();
    TimeViewed(manager,1234,0,viewed);
    int view=*viewed;
@@ -208,7 +211,7 @@ int main(){
    view=*viewed;
    int *courseID=new int();
    int *classID=new int();
-   GetIthWatchedClass(manager,1,courseID,classID);
+   GetIthWatchedClass(manager,3,courseID,classID);
    int a=*classID;
    int b=*courseID;
    Quit((void **)&manager);
